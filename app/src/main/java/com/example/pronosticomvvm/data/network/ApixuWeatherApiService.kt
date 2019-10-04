@@ -1,12 +1,12 @@
-package com.example.pronosticomvvm.data
+package com.example.pronosticomvvm.data.network
 
-import android.location.Location
-import com.example.pronosticomvvm.data.response.CurrentWeatherResponse
+
+
+import com.example.pronosticomvvm.data.network.response.CurrentWeatherResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.internal.http2.ErrorCode
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -18,20 +18,24 @@ const val API_KEY = "338b804595dc89a722507ea1be00d245"
 
 interface ApixuWeatherApiService {
 
-    @GET("current?")
+    @GET("current")
     fun getCurrentWeather(
         @Query("query") location: String,
         @Query("lang") languageCode: String = "en"
     ): Deferred<CurrentWeatherResponse>
 
     companion object{
-        operator fun invoke(): ApixuWeatherApiService{
+        operator fun invoke(
+            connectivityInterceptor: ConnectivityInterceptor
+        ): ApixuWeatherApiService {
             val requestInterceptor = Interceptor{chain ->
 
                 val url = chain.request()
                     .url()
                     .newBuilder()
-                    .addQueryParameter("access_key", API_KEY)
+                    .addQueryParameter("access_key",
+                        API_KEY
+                    )
                     .build()
                 val request = chain.request()
                     .newBuilder().url(url)
@@ -43,11 +47,12 @@ interface ApixuWeatherApiService {
 
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(requestInterceptor)
+                .addInterceptor(connectivityInterceptor)
                 .build()
 
             return Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("https://api.weatherstack.com/")
+                .baseUrl("http://api.weatherstack.com/")
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

@@ -1,4 +1,4 @@
-package com.example.pronosticomvvm.data.response
+package com.example.pronosticomvvm.data.db.entity
 
 
 import com.google.gson.annotations.SerializedName
