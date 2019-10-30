@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    android:background="@drawable/gradient"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Ubicación del clima">
+        <SwitchPreference
+            android:key="USE_DEVICE_LOCATION"
+            android:title="Usar ubicación del dispositivo"
+            android:summary="Permita que la aplicación obtenga su ubicación"
+            android:defaultValue="true"
+            android:disableDependentsState="true"/>
+
+        <EditTextPreference
+            android:key="CUSTOM_LOCATION"
+            android:title="Ubicación"
+            android:summary="La ubicación para la que se muestra el clima"
+            android:defaultValue="Los Angeles"
+            android:dependency="USE_DEVICE_LOCATION"/>
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

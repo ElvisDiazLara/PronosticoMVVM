@@ -12,6 +12,8 @@ class WeatherNetworkDataSourceImpl(
 
 
     private val _downloadedCurrentWeather = MutableLiveData<CurrentWeatherResponse>()
+
+
     override val downloadedCurrentWeather: LiveData<CurrentWeatherResponse>
         get() =  _downloadedCurrentWeather
 
@@ -24,7 +26,7 @@ class WeatherNetworkDataSourceImpl(
            _downloadedCurrentWeather.postValue(fetchedCurrentWeather)
         }
         catch (e: NoConnectivityException){
-            Log.e("Connectivity", "No hay conecxion a internet")
+            Log.e("Connectivity", "No hay conecxion a internet", e)
         }
 
     }

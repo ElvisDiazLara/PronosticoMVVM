@@ -6,6 +6,7 @@ import com.example.pronosticomvvm.internal.NoConnectivityException
 import okhttp3.Interceptor
 import okhttp3.Response
 
+@Suppress("DEPRECATION")
 class ConnectivityInterceptorImpl(
     context: Context
 ) : ConnectivityInterceptor {
