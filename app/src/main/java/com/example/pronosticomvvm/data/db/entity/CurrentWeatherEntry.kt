@@ -11,7 +11,8 @@ const val CURRENT_WEATHER_ID = 0
 data class CurrentWeatherEntry(
 
 
-
+    //@SerializedName("weather_descriptions")
+    //val weatherDescriptions: List<String>,
     val temperature: Double,
     @SerializedName("wind_speed")
     val windSpeed: Double,
